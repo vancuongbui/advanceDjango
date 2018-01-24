@@ -1,0 +1,52 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+    <div class="col-md-4">     <!-- for bootstrap references-->
+        <div class="content">
+            {% if user.is_authenticated %}
+                <h2>Welcome Back!
+                    <!-- link to actual profile -->
+                    <a href=" {% url 'posts:for_user' username=user.username %} ">
+                        @{{ user.username }}
+                    </a>
+                </h2>
+            {% endif %}
+            <h2>Group</h2>
+            <p>Welcome to the group page!</p>
+        </div>
+        <!-- provide a button to let authenticated user to create new group -->
+        {% if user.is_authenticated %}
+            <a href=" {% url 'groups:create' %} " class="btn btn-md btn-fill btn-warning">
+                <span class="glyphicon plyphicon-plus-sign">New Group</span>
+            </a>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block group_content %}
+    <div class="col-md-8">
+        <h3>These are all groups listed in the site</h3>
+        <div class="list-group">
+            {% for group in group_list %}
+                <a class="list-group-item" href=" {% url 'groups:single' slug=group.slug %} ">
+                    <!-- above html code is to take to the single page through the slug connection -->
+                    <h3 class="title list-group-item-heading">This is group: {{group.name}} </h3>
+                    <div class="list-group-item-text container-fluid">
+                        {{group.description_html|safe}}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="badge">{{group.members.count}} </span>
+                                member{{group.memebers.count|pluralize}}
+                            </div>
+                            <div class="col-md-4">
+                                <span class="badge">{{group.posts.count}} </span>
+                                post{{group.posts.count|pluralize}}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

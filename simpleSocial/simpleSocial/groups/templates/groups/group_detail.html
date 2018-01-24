@@ -1,0 +1,36 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+    <h1> {{group.name}} </h1>   <!--called group class from models.Group (just the lower case)-->
+    <h2>Member Count: {{group.members.count}} </h2>
+    <div class="content">     <!-- for bootstrap references-->
+        {% if user in group.members.all %}
+            <p>{{ warningMessage }}</p>
+            <!-- the following is to let a memeber leave the group -->
+            <a href=" {% url 'groups:leave' slug=group.slug %} " class="btn btn-lg btn-fill btn-warning">
+                <span class="glyphicon glyphicon-remove-circle">Leave</span>
+            </a>    <!-- glyphicon is bootraps icon -->
+
+        {% else %}
+             <!-- the following is to let a memeber joint the group -->
+             <a href=" {% url 'groups:join' slug=group.slug %} " class="btn btn-lg btn-fill btn-warning">
+                <span class="glyphicon glyphicon-ok-circle">Join</span>
+            </a>    <!-- glyphicon is bootraps icon -->
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+<!--Block content here-->
+{% block group_content %}
+    <div class="col-md-8">
+        {% if group.posts.count == 0 %}
+            <h2>No posts in this group</h2>
+        {% else %}
+            {% for post in group.posts.all %}
+                {% include "posts/_post.html" %}    <!--include is just like extends, 
+                    using in the middle of the page -->
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

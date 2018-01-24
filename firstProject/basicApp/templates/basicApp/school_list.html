@@ -1,0 +1,11 @@
+{% extends 'basicApp/base.html' %}
+
+{% block bodyBlock %}
+    <h1>Welcome to a list of all the schools</h1>
+    <ol>
+        {% for school in schools %}     <!-- school_list is achieved from class ListView-->
+        <h2><li><a href="{{ school.id }} ">{{ school.name }}</a> </li></h2>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

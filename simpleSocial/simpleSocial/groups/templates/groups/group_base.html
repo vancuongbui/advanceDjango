@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">     <!-- for bootstrap references-->
+        <div class="row">   <!-- for bootstrap references-->
+            {% block pregroup %} {% endblock %}     <!--will se how it works later on -->
+            {% block group_content %} {% endblock %}
+            {% block postgroup %} {% endblock %}
+        </div>
+
+    </div>
+{% endblock %}
